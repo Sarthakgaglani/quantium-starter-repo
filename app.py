@@ -5,7 +5,6 @@ import plotly.express as px
 
 
 # Load and prepare data
-
 df = pd.read_csv("processed_sales_data.csv")
 df["Date"] = pd.to_datetime(df["Date"])
 
@@ -20,10 +19,10 @@ monthly_df = (
 # Create Dash app
 
 app = dash.Dash(__name__)
+server = app.server   # IMPORTANT for Dash testing
 
 
 # Layout
-
 app.layout = html.Div(
     style={
         "fontFamily": "Arial",
@@ -64,6 +63,7 @@ app.layout = html.Div(
 
 
 # Callback
+
 @app.callback(
     Output("sales-line-chart", "figure"),
     Input("region-filter", "value")
@@ -91,6 +91,8 @@ def update_chart(selected_region):
 
     return fig
 
+
 # Run app
+
 if __name__ == "__main__":
     app.run(debug=True)
